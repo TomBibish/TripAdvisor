@@ -1,0 +1,79 @@
+
+{% extends "base.html" %}
+{% block content_block %}
+<br>
+<br>
+<div>
+    <section class="bg-primary text-light p-5">
+
+        <div class="container">
+
+            <div class="d-md-flex justify-content-between align-items-center">
+
+                <h3 class="mb-3 mb-md-0"> Search</h3>
+
+                <div class="input-group news-input">
+
+                    <input
+                    id="search_input"
+                    type="text"
+                    class="form-control d-sm"
+                    placeholder="By city/country/name"/>
+
+                    <button
+                    onclick="location.href = '/?filter_restaurant=' + document.getElementById('search_input').value "
+                    class="btn btn-dark btn-lg"
+                    type="button"
+                    id=email>Sumbit</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div style="margin:auto; width:10%">
+            <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle btn-dark" data-bs-toggle="dropdown">Sort By</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Sort by Stars(high-low)</a>
+              <a class="dropdown-item" href="#">Sort by Stars(low-high)</a>
+              <a class="dropdown-item" onclick="location.href ='/?sort_by_price=asc'">Sort by Price(high-low)</a>
+              <a class="dropdown-item" onclick="location.href ='/?sort_by_price=desc'">Sort by Price(low-high)</a>
+              <a class="dropdown-item" href="#">Sort by Review(high-low)</a>
+              <a class="dropdown-item" href="#">Sort by Review(low-high)</a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+     <section class="p-5">
+       <div class="container">
+           <div class="row text-center g-4 ">
+               {% for restaurant in restaurants %}
+               <div class="col-md">
+                   <div class="card bg-dark text-light">
+                       <div class="card-body text-center">
+                           <h3 class="card-title mb-3">
+                               <img src="{{restaurant.image}}" style="width:20%">
+                           </h3>
+                           <p class="card-text">
+                               {{restaurant.country}}, {{restaurant.city}} <br>
+                               {{restaurant.address}} st. <br>
+                               {{restaurant.type}} Food <br>
+                               Price Range - {{restaurant.price_range }} <br>
+                               Reviews: {{ reviews|get_item:restaurant.name|length }}
+                               <br>
+                               Avg rank:
+                               {% for i in int_stars|get_item:restaurant.name %}
+                                    <span class="fa fa-star checked"></span>
+                               {% endfor %}
+                           </p>
+                           <a href="{% url 'restaurants' restaurant.id %}" class="btn btn-primary">Read More</a>
+                       </div>
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+       </div>
+   </section>
+</div>
+
+{% endblock %}

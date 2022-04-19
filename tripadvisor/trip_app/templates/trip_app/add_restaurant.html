@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content_block %}
+    {% csrf_token %}
+    <div class="center" style="text-align:center">
+        <form action="{% url 'add_restaurant' %}" method="post">
+            <br><br><br><br>
+            <h1>Add Restaurant</h1>
+            {{form.as_p}}
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-secondary">Submit</button>
+              </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

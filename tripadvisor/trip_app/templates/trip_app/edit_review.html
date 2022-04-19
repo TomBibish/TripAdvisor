@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content_block %}
+
+    <div class="center" style="text-align:center">
+        <form action="{% url 'edit_review' review.id %}" method="post">
+            <br><br><br>
+             <h1>Edit Review</h1>
+            {% csrf_token %}
+                {{form.as_p}}
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                  </div>
+                </div>
+        </form>
+    </div>
+{% endblock %}

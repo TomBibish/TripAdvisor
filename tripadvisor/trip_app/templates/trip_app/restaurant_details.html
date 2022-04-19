@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content_block %}
+<br><br>
+<div>
+     <section class="p-5">
+       <div class="container">
+           <div class="row text-center g-4 ">
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <h3 class="card-title mb-3">
+                                {{restaurant.name}}
+                            </h3>
+                            <p class="card-text">
+                                {{restaurant.country}}, {{restaurant.city}} <br>
+                                {{restaurant.address}} st. <br>
+                                {{restaurant.type}} Food <br>
+                                Price Range - {{restaurant.price_range }} <br>
+                                {{reviews|length}} Reviews
+                            </p>
+                            <img src="{{restaurant.image}}" style="width:10%;">
+                            <br><br>
+                            <a href="{% url 'write_review_from_restaurant' restaurant.id %}" class="btn btn-primary">
+                                Add Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+     </section>
+    <h2 style="text-align:center">Reviews</h2>
+         <section class="p-5">
+       <div class="container">
+           <div class="row text-center g-4 ">
+               {% for review in reviews %}
+               <div class="col-md">
+                   <div class="card bg-dark text-light">
+                       <div class="card-body text-center">
+                           <p class="card-text">
+                               {{review.visit_date}}<br>
+                               {{review.user.username}} Rated
+                               {% for i in stars|get_item:review.id %}
+                                    <span class="fa fa-star checked"></span>
+                               {% endfor %}<br>
+                               {{review.review_title}}<br>
+                               "{{review.review_text}}"<br>
+                               {% if request.user.username == review.user.username %}
+                               <button onclick="location.href = '{% url 'delete_review' review.id %}'" class="btn btn-danger" value="Delete">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                   Delete
+                               </button>
+                               <button onclick="location.href = '{% url 'edit_review' review.id %}'" class="btn btn-primary" value="Delete">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                   Edit
+                               </button>
+                               {% endif %}
+                           </p>
+                       </div>
+                   </div>
+               </div>
+               {% endfor %}
+           </div>
+       </div>
+   </section>
+</div>
+
+{% endblock %}
